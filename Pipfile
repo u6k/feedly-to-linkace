@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+
+[dev-packages]
+flake8 = "*"
+autopep8 = "*"
+isort = "*"
+nose = "*"
+
+[requires]
+python_version = "3.8"
+
+[scripts]
+lint = "flake8 ."
+fix = "bash -c \"pipenv run isort . && pipenv run autopep8 -ivr .\""
+test = "nosetests tests"
+main = "python feedly_to_linkace/main.py"
