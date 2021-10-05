@@ -8,7 +8,7 @@ on:
 env:
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
   IMAGE_NAME: feedly-to-linkace
-  IMAGE_VERSION: 1.0.0
+  IMAGE_VERSION: 1.1.0-develop
 
 jobs:
   build_and_push:
