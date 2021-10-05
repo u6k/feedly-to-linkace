@@ -2,14 +2,16 @@ name: build and push
 
 on:
   push:
+    branches:
+      - main
 
 env:
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
   IMAGE_NAME: feedly-to-linkace
-  IMAGE_VERSION: 1.0.0-develop
+  IMAGE_VERSION: 1.0.0
 
 jobs:
-  build:
+  build_and_push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

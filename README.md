@@ -1,5 +1,7 @@
 # Feedly to LinkAce _(feedly-to-linkace)_
 
+[![build and push](https://github.com/u6k/feedly-to-linkace/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/u6k/feedly-to-linkace/actions/workflows/build-and-push.yml)
+
 > Feedly記事をLinkAceブックマークに自動登録する
 
 ## Install
