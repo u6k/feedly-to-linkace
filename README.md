@@ -1,5 +1,7 @@
 # Feedly to LinkAce _(feedly-to-linkace)_
 
+[![build and push](https://github.com/u6k/feedly-to-linkace/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/u6k/feedly-to-linkace/actions/workflows/build-and-push.yml)
+
 > Feedly記事をLinkAceブックマークに自動登録する
 
 ## Install
@@ -47,6 +49,19 @@ $ docker run --rm ghcr.io/u6k/feedly-to-linkace pipenv run main
 ## Other
 
 最新の情報は、[Wiki - bookmark - u6k.Redmine](https://redmine.u6k.me/projects/bookmark-bundler/wiki/Wiki)を参照してください。
+
+### リリース手順
+
+- リリース・ブランチを開始する
+- TODOコメントを確認する
+- バージョンを更新する
+    - `.github/workflows/build-and-push.yml`
+    - `feedly_to_linkace/__init__.py`
+- CHANGELOGを最新化する
+- CIの成功を確認する
+- リリース・ブランチを終了する
+- バージョンを更新して`-develop`サフィックスを追加する
+- GitHubリリース・ノートを編集する
 
 ## Maintainer
 
