@@ -16,6 +16,8 @@ jobs:
         uses: docker/setup-buildx-action@v1
         with:
           install: true
+      - name: Setup dotenv
+        run: cp .env.original .env
       - name: Lint
         run: docker-compose run app pipenv run lint
       - name: Test
