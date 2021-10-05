@@ -1,0 +1,61 @@
+name: build and push
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  IMAGE_NAME: feedly-to-linkace
+  IMAGE_VERSION: 1.0.0
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          install: true
+      - name: Setup dotenv
+        run: cp .env.original .env
+      - name: Lint
+        run: docker-compose run app pipenv run lint
+      - name: Test
+        run: docker-compose run app pipenv run test
+      - name: Login to GitHub Container Repository
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push to GitHub Container Registry
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile.production
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+
+      # Slack notification
+      - name: Slack notification on success
+        if: success()
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+          SLACK_CHANNEL: build
+          SLACK_ICON_EMOJI: ':cat:'
+          SLACK_MESSAGE: ${{ github.repository }} Build success
+          SLACK_COLOR: good
+      - name: Slack notification on failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+          SLACK_CHANNEL: build
+          SLACK_ICON_EMOJI: ':scream_cat:'
+          SLACK_MESSAGE: ${{ github.repository }} Build failure
+          SLACK_COLOR: danger
