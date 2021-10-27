@@ -118,6 +118,9 @@ def create_bookmark(item):
     if res.status_code == 200:
         L.debug("Bookmark created")
         result = res.json()["id"]
+    elif res.status_code == 422:
+        L.debug("Bookmark already exist")
+        result = -1
     else:
         L.warning(f"Bookmark create fail: {res.status_code}: {res.text}")
         result = None
